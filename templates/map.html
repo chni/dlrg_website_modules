@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>DLRG Scharbeutz - Aktuelle Situation im Detail</title>
+    <style>
+      html, body {
+        height: 90%;
+	width:100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+
+function initMap() {
+  var myLatLng = {lat: 54.03986359132022, lng: 10.772223137319088};
+
+  // Create a map object and specify the DOM element for display.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    scrollwheel: true,
+    zoom: 12,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+  });
+
+
+
+  // Create a marker and set its position.
+  console.log('Hallo Welt '+map.toString());
+  setMarkers(map);
+ 
+}
+
+// Data for the markers consisting of a name, a LatLng and a zIndex for the
+// order in which these markers should display on top of each other.
+
+var beaches = [
+  ['Turm 1', 54.010509802865386,10.770973898470402 , 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-1-ostseetherme.html"> Link zum Turm</a>'],
+  ['Turm 2', 54.013399600750525, 10.76856929808855, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-2-grillmaster.html"> Link zum Turm</a>'],
+  ['Turm 3', 54.01682225823417, 10.76546497642994, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-3-wolfsschlucht.html"> Link zum Turm</a>'],
+  ['Turm 4', 54.02158876649609, 10.76158583164215, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-4-promenade.html"> Link zum Turm</a>'],
+  ['Turm 5', 54.02740108729025, 10.757795199751854, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/hauptwache.html"> Link zum Turm</a>'],
+  ['Turm 6', 54.03165655941469,10.754716359078884 , 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-6-hamburger-ring.html"> Link zum Turm</a>'],
+  ['Turm 7', 54.03680512008208, 10.751505754888058, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-7-jugendherberge.html"> Link zum Turm</a>'],
+  ['Turm 8', 54.04202549191203, 10.75012106448412, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-8-strandallee.html"> Link zum Turm</a>'],
+  ['Turm 9', 54.04678655296428, 10.750790946185589, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-9-surfschule.html"> Link zum Turm</a>'],
+  ['Turm 10', 54.05189170995173, 10.753107368946075, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-10-seebruecke-haffkrug.html"> Link zum Turm</a>'],
+  ['Turm 11', 54.05904625932606,10.759190283715725, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-11-wattwurm.html"> Link zum Turm</a>'],
+  ['Turm 12', 54.063181217047415, 10.767618119716644, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-12-tabakshof.html"> Link zum Turm</a>'],
+  ['Turm 13', 54.07085832036117, 10.783532001078129, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-13-ferienpark.html"> Link zum Turm</a>'],
+  ['Badeanstalt Pönitz/Klingberg', 54.02970660722535, 10.703474096953869, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/turm-14-klingberg.html"> Link zum Turm</a>'],
+  ['Wasserrettungsstion Rudi Stolle Offendorf', 53.94663582094221, 10.77440980821848, 1,' ','<a href="http://haffkrug-scharbeutz.dlrg.de/wasserrettung/wasserrettungsdienst/stationen/wasserrettungstation-rudi-stolle.html"> Link zum Turm</a>']
+];
+
+function setMarkers(map) {
+  
+  var normal = 'normal.png';  
+  var gelb = 'gelb.png';
+  var rot = 'rot.png';
+  var zu = 'zu.png';
+
+
+  var infowindow1 = new google.maps.InfoWindow({
+     content: beaches[0][0]+'<br>'+beaches[0][5]+'<br>'+beaches[0][4]
+  });
+	 
+  var marker1 = new google.maps.Marker({
+     position: {lat: beaches[0][1], lng: beaches[0][2]},
+     map: map,
+     icon: normal,
+     title: beaches[0][0],
+     zIndex: beaches[0][3]
+  });
+    
+  marker1.addListener('click', function() {
+     infowindow1.open(map, marker1);
+  });
+
+  var infowindow2 = new google.maps.InfoWindow({
+     content: beaches[1][0]+'<br>'+beaches[1][5]+'<br>'+beaches[1][4]
+  });
+	 
+  var marker2 = new google.maps.Marker({
+     position: {lat: beaches[1][1], lng: beaches[1][2]},
+     map: map,
+     icon: normal,
+     title: beaches[1][0],
+     zIndex: beaches[1][3]
+  });
+    
+  marker2.addListener('click', function() {
+     infowindow2.open(map, marker2);
+  });
+
+  var infowindow3 = new google.maps.InfoWindow({
+     content: beaches[2][0]+'<br>'+beaches[2][5]+'<br>'+beaches[2][4]
+  });
+	 
+  var marker3 = new google.maps.Marker({
+     position: {lat: beaches[2][1], lng: beaches[2][2]},
+     map: map,
+     icon: normal,
+     title: beaches[2][0],
+     zIndex: beaches[2][3]
+  });
+    
+  marker3.addListener('click', function() {
+     infowindow3.open(map, marker3);
+  });
+  var infowindow4 = new google.maps.InfoWindow({
+     content: beaches[3][0]+'<br>'+beaches[3][5]+'<br>'+beaches[3][4]
+  });
+	 
+  var marker4 = new google.maps.Marker({
+     position: {lat: beaches[3][1], lng: beaches[3][2]},
+     map: map,
+     icon: normal,
+     title: beaches[3][0],
+     zIndex: beaches[3][3]
+  });
+    
+  marker4.addListener('click', function() {
+     infowindow4.open(map, marker4);
+  });
+  var infowindow5 = new google.maps.InfoWindow({
+     content: beaches[4][0]+'<br>'+beaches[4][5]+'<br>'+beaches[4][4]
+  });
+	 
+  var marker5 = new google.maps.Marker({
+     position: {lat: beaches[4][1], lng: beaches[4][2]},
+     map: map,
+     icon: normal,
+     title: beaches[4][0],
+     zIndex: beaches[4][3]
+  });
+    
+  marker5.addListener('click', function() {
+     infowindow5.open(map, marker5);
+  });
+  var infowindow6 = new google.maps.InfoWindow({
+     content: beaches[5][0]+'<br>'+beaches[5][5]+'<br>'+beaches[5][4]
+  });
+	 
+  var marker6 = new google.maps.Marker({
+     position: {lat: beaches[5][1], lng: beaches[5][2]},
+     map: map,
+     icon: normal,
+     title: beaches[5][0],
+     zIndex: beaches[5][3]
+  });
+    
+  marker6.addListener('click', function() {
+     infowindow6.open(map, marker6);
+  });
+  var infowindow7 = new google.maps.InfoWindow({
+     content: beaches[6][0]+'<br>'+beaches[6][5]+'<br>'+beaches[6][4]
+  });
+	 
+  var marker7 = new google.maps.Marker({
+     position: {lat: beaches[6][1], lng: beaches[6][2]},
+     map: map,
+     icon: normal,
+     title: beaches[6][0],
+     zIndex: beaches[6][3]
+  });
+    
+  marker7.addListener('click', function() {
+     infowindow7.open(map, marker7);
+  });
+  var infowindow8 = new google.maps.InfoWindow({
+     content: beaches[7][0]+'<br>'+beaches[7][5]+'<br>'+beaches[7][4]
+  });
+	 
+  var marker8 = new google.maps.Marker({
+     position: {lat: beaches[7][1], lng: beaches[7][2]},
+     map: map,
+     icon: normal,
+     title: beaches[7][0],
+     zIndex: beaches[7][3]
+  });
+    
+  marker8.addListener('click', function() {
+     infowindow8.open(map, marker8);
+  });
+  var infowindow9 = new google.maps.InfoWindow({
+     content: beaches[8][0]+'<br>'+beaches[8][5]+'<br>'+beaches[8][4]
+  });
+	 
+  var marker9 = new google.maps.Marker({
+     position: {lat: beaches[8][1], lng: beaches[8][2]},
+     map: map,
+     icon: normal,
+     title: beaches[8][0],
+     zIndex: beaches[8][3]
+  });
+    
+  marker9.addListener('click', function() {
+     infowindow9.open(map, marker9);
+  });
+  var infowindow10 = new google.maps.InfoWindow({
+     content: beaches[9][0]+'<br>'+beaches[9][5]+'<br>'+beaches[9][4]
+  });
+	 
+  var marker10 = new google.maps.Marker({
+     position: {lat: beaches[9][1], lng: beaches[9][2]},
+     map: map,
+     icon: normal,
+     title: beaches[9][0],
+     zIndex: beaches[9][3]
+  });
+    
+  marker10.addListener('click', function() {
+     infowindow10.open(map, marker10);
+  });
+  var infowindow11 = new google.maps.InfoWindow({
+     content: beaches[10][0]+'<br>'+beaches[10][5]+'<br>'+beaches[10][4]
+  });
+	 
+  var marker11 = new google.maps.Marker({
+     position: {lat: beaches[10][1], lng: beaches[10][2]},
+     map: map,
+     icon: normal,
+     title: beaches[10][0],
+     zIndex: beaches[10][3]
+  });
+    
+  marker11.addListener('click', function() {
+     infowindow11.open(map, marker11);
+  });
+  var infowindow12 = new google.maps.InfoWindow({
+     content: beaches[11][0]+'<br>'+beaches[11][5]+'<br>'+beaches[11][4]
+  });
+	 
+  var marker12 = new google.maps.Marker({
+     position: {lat: beaches[11][1], lng: beaches[11][2]},
+     map: map,
+     icon: normal,
+     title: beaches[11][0],
+     zIndex: beaches[11][3]
+  });
+    
+  marker12.addListener('click', function() {
+     infowindow12.open(map, marker12);
+  });
+  var infowindow13 = new google.maps.InfoWindow({
+     content: beaches[12][0]+'<br>'+beaches[12][5]+'<br>'+beaches[12][4]
+  });
+	 
+  var marker13 = new google.maps.Marker({
+     position: {lat: beaches[12][1], lng: beaches[12][2]},
+     map: map,
+     icon: normal,
+     title: beaches[12][0],
+     zIndex: beaches[12][3]
+  });
+    
+  marker13.addListener('click', function() {
+     infowindow13.open(map, marker13);
+  });
+  var infowindow14 = new google.maps.InfoWindow({
+     content: beaches[13][0]+'<br>'+beaches[13][5]+'<br>'+beaches[13][4]
+  });
+	 
+  var marker14 = new google.maps.Marker({
+     position: {lat: beaches[13][1], lng: beaches[13][2]},
+     map: map,
+     icon: normal,
+     title: beaches[13][0],
+     zIndex: beaches[13][3]
+  });
+    
+  marker14.addListener('click', function() {
+     infowindow14.open(map, marker14);
+  });
+  var infowindow15 = new google.maps.InfoWindow({
+     content: beaches[14][0]+'<br>'+beaches[14][5]+'<br>'+beaches[14][4]
+  });
+	 
+  var marker15 = new google.maps.Marker({
+     position: {lat: beaches[14][1], lng: beaches[14][2]},
+     map: map,
+     icon: normal,
+     title: beaches[14][0],
+     zIndex: beaches[14][3]
+  });
+    
+  marker15.addListener('click', function() {
+     infowindow15.open(map, marker15);
+  });
+  
+}
+
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key= AIzaSyAXQ4QhLm0YYi_qKFoKvdcIg6DSyDNvoF0&callback=initMap">
+    </script>
+  </body>
+</html>
