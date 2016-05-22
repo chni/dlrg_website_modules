@@ -1,4 +1,4 @@
-./getwetter.sh > wetter
+/opt/flags/getwetter.sh > wetter
 
 LUFT=`cat wetter | grep Luft: | cut -f2 -d ":"`
 WASSER=`cat wetter | grep Wasser: | cut -f2 -d ":"`
@@ -97,6 +97,6 @@ fi
 
 
 
-cat templates/small_widget.html | sed s/SBZSTATE/$SBZSTATE/g | sed s/HFSTATE/$HFSTATE/g | sed s/SDFSTATE/$SDFSTATE/g | sed s/PSTATE/$PSTATE/g | sed s/OSTATE/$OSTATE/g | sed s/LUFTDRUCK/$LUFTDRUCK/g | sed s/LUFTFEUCHTE/$LUFTFEUCHTE/g | sed s/WR/$WR/g | sed s/WS/$WS/g | sed s/LUFT/$LUFT/g | sed s/WASSER/$WASSER/g > ./temp/small_widget.html
+cat /opt/flags/templates/small_widget.html | sed s/SBZSTATE/$SBZSTATE/g | sed s/HFSTATE/$HFSTATE/g | sed s/SDFSTATE/$SDFSTATE/g | sed s/PSTATE/$PSTATE/g | sed s/OSTATE/$OSTATE/g | sed s/LUFTDRUCK/$LUFTDRUCK/g | sed s/LUFTFEUCHTE/$LUFTFEUCHTE/g | sed s/WR/$WR/g | sed s/WS/$WS/g | sed s/LUFT/$LUFT/g | sed s/WASSER/$WASSER/g > /opt/flags/temp/small_widget.html
 
-cp temp/small_widget.html /var/www/html/flags/
+cp /opt/flags/temp/small_widget.html /var/www/html/flags/

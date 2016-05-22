@@ -7,9 +7,9 @@ luftfeuchte=`cat webcams-wetter | grep "Luftfeuchtigkeit:" | cut -d ">" -f 3 | c
 windstaerke=`cat webcams-wetter | grep "Windstärke:" | cut -d ">" -f 3 | cut -d "<" -f 1`
 rm webcams-wetter*
 
-echo "Luft: "$luft
-echo "Wasser: "$wasser
-echo "Luftdruck: "$luftdruck
-echo "Luftfeuchte: "$luftfeuchte
-echo "Windrichtung: "$windrichtung
-echo "Windstärke: "$windstaerke
+echo "Luft:"$luft
+echo "Wasser:"$wasser
+echo "Luftdruck:"$luftdruck
+echo "Luftfeuchte:"$luftfeuchte
+echo "Windrichtung:"$windrichtung
+echo "Windstärke:"$windstaerke
